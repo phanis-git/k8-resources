@@ -1,0 +1,10 @@
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: common-errors
+spec:
+  containers:
+  - name: nginx 
+    image: nginxdkjdsoe   # this type of image is not exist in hub so error
+  - name: almalinux
+    image: almalinux:9   # here there is only os is available but no command for running the container so we get the error
