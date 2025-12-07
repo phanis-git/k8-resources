@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    project: roboshop
+    purpose: deployment 
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: roboshop
+      purpose: deployment
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        purpose: deployment
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2   # even if we change version it will change to new version and run as rolling update mechanism
+        ports:
+        - containerPort: 80 

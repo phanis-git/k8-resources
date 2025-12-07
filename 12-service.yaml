@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-service
+spec:
+  selector:
+    project: roboshop
+    component: frontend
+    environment: dev
+  ports:
+    - protocol: TCP
+      port: 80        # this is service port
+      targetPort: 80  # this is pod port or container port , for nginx we know container port is also 80

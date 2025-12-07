@@ -1,0 +1,23 @@
+apiVersion: app/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    purpose: replicaset-demo
+    project: roboshop
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+       purpose: replicaset-demo
+       project: roboshop
+  template:
+    metadata:
+      labels:
+        purpose: replicaset-demo
+        project: roboshop
+    spec:
+      containers:
+      - name: nginx
+        image: nginx   # if image version change replicaset does not crrate new pod with change version , so it is disadvantage , so use go to Deployments
