@@ -12,7 +12,7 @@ spec:
   csi:
     driver: ebs.csi.aws.com
     fsType: ext4
-    volumeHandle: vol-03c604538dd7d2f41  # we need change with our ebs volume id which we are created
+    volumeHandle: vol-08aec2b0a3f4cc5e61  # we need change with our ebs volume id which we are created
    
 ---
 apiVersion: v1
