@@ -1,0 +1,65 @@
+# Creating pv is k8 admin job
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ebs-static-test
+spec:
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy : Retain
+  capacity:
+    storage: 15Gi
+  csi:
+    driver: ebs.csi.aws.com
+    fsType: ext4
+    volumeHandle: vol-03c604538dd7d2f41  # we need change with our ebs volume id which we are created
+   
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-static-claim
+spec:
+  storageClassName: "" # for static we doesnot use
+  volumeName: ebs-static-test
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx 
+  labels: 
+    purpose: ebs-static
+spec:
+  containers:
+  - name: nginx 
+    image: nginx
+    volumeMounts:
+    - name: ebs-static-claim
+      mountPath: /usr/share/nginx/html
+  nodeSelector:
+    topology.kubernetes.io/zone: us-east-1b  # check the node labels and copy paste here
+  volumes:
+  - name: nginx-html
+    persistentVolumeClaim:
+      claimName: ebs-static-claim
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: nginx-ebs-static
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: ebs-static
+  ports:
+    - protocol: TCP
+      port: 80 
+      targetPort: 80
+      nodePort: 30007
+

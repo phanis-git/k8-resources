@@ -1,0 +1,28 @@
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: emptyDir-demo
+spec:
+  containers:
+  - name: nginx
+    image: nginx 
+    volumeMounts:
+    - mountPath: /var/log/nginx
+      name: logs-volume
+  
+  - name: almalinux
+    image: almalinux:9
+    command: ["sleep","10000"]
+    volumeMounts:
+    - mountPath: /mnt/nginx-log
+      name: logs-volume
+      readOnly: true
+
+  volumes:
+  - name: logs-volume
+    emptyDir: 
+      sizeLimit: 100Mi
+    #  emptyDir: {}
+
+# kubectl exec -it emptyDir-demo -c almalinux -- bash
+# we can see and access the nginx container logs 
