@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-08ea446237bfb47e1
+    volumeHandle: fs-0a229fb6af61646c2 # change with we created efs value
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -45,3 +45,10 @@ spec:
   - name: nginx-html
     persistentVolumeClaim:
       claimName: efs-static
+
+
+# kubectl kustomize \
+    # "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-2.1" > public-ecr-driver.yaml
+
+    # The above command is for installing efs driver and after this we need to apply 
+    # kubectl apply -f public-ecr-driver.yaml
