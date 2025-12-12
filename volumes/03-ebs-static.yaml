@@ -14,19 +14,19 @@ spec:
     fsType: ext4
     volumeHandle: vol-0fb2deccaee59cec2  # we need change with our ebs volume id which we are created
    
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: ebs-static-claim
-# spec:
-#   storageClassName: "" # for static we doesnot use
-#   volumeName: ebs-static-test
-#   accessModes:
-#   - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 15Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-static-claim
+spec:
+  storageClassName: "" # for static we doesnot use
+  volumeName: ebs-static-test
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
 
 # ---
 # apiVersion: v1
