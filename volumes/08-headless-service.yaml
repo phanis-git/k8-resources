@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: normal-service-test
+  labels:
+    project: roboshop
+    purpose: deployment 
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: roboshop
+      purpose: deployment
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        purpose: deployment
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2   # even if we change version it will change to new version and run as rolling update mechanism
+        ports:
+        - containerPort: 80 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    project: roboshop
+    purpose: deployment
+  ports:
+    - protocol: TCP
+      port: 80        # this is service port
+      targetPort: 80 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-headless
+spec:
+  clusterIp: None
+  selector:
+    project: roboshop
+    purpose: deployment
+  ports:
+    - protocol: TCP
+      port: 80        # this is service port
+      targetPort: 80 
